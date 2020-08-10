@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "cuda_runtime.h"
-#include "nccl.h"
+#include <cuda_runtime.h>
+#include <nccl.h>
+#include <cstdlib>
 
 #define CUDACHECK(cmd) do {                         \
   cudaError_t e = cmd;                              \
