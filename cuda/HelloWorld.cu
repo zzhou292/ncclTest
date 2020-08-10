@@ -1,9 +1,11 @@
 #include<stdio.h>
 
+//__global__ void myKernel(void){
+
+//}
+
 __global__ void add(int *a, int *b, int *c){
-    printf("testxxxxx %d\n",c[blockIdx.x]);
     c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
-    printf("test");
 }
 
 void random_ints(int* a, int N)
@@ -15,7 +17,8 @@ void random_ints(int* a, int N)
 
 #define N 512
 int main(void){
-    printf("Hello World!\n");
+    //myKernel<<<1,1>>>();
+    //printf("Hello World!\n");
 
     int *a, *b, *c;
     int *d_a, *d_b, *d_c;
@@ -39,11 +42,10 @@ int main(void){
     cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
 
-    printf("test point 1 \n");
+    
     // Launch add() kernel on GPU
-    add<<<1,1>>>(d_a, d_b, d_c);
+    add<<<N,1>>>(d_a, d_b, d_c);
 
-    printf("test point 2 \n");
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
     
