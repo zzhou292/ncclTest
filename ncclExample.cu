@@ -68,6 +68,10 @@ int main(int argc, char* argv[])
     CUDACHECK(cudaStreamSynchronize(s[i]));
   }
 
+  for (int i = 0; i < nDev ; ++i){
+    std::cout<<"i"<<recvbuff[u]<<std::endl;
+  }
+
 
   //free device buffers
   for (int i = 0; i < nDev; ++i) {
