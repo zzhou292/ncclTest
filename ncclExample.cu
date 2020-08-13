@@ -1,6 +1,11 @@
 #include <stdio.h>
+<<<<<<< HEAD
 #include <cuda_runtime.h>
 #include <nccl.h>
+=======
+#include "cuda_runtime.h"
+#include "nccl.h"
+>>>>>>> 28bdbf8feeb6fcfa67e4a744f75b8aa814cb346a
 
 #define CUDACHECK(cmd) do {                         \
   cudaError_t e = cmd;                              \
@@ -66,6 +71,10 @@ int main(int argc, char* argv[])
   for (int i = 0; i < nDev; ++i) {
     CUDACHECK(cudaSetDevice(i));
     CUDACHECK(cudaStreamSynchronize(s[i]));
+  }
+
+  for (int i = 0; i < nDev ; ++i){
+    std::cout<<"i"<<recvbuff[u]<<std::endl;
   }
 
 
