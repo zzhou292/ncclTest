@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
   }
 
   for (int i = 0; i < nDev ; ++i){
-    std::cout<<"i"<<recvbuff[u]<<std::endl;
+    std::cout<<"i"<<recvbuff[i]<<std::endl;
   }
 
 
