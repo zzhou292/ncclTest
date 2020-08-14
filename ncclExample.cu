@@ -5,23 +5,23 @@
 
 
 
-#define CUDACHECK(cmd) do {                         \
-  cudaError_t e = cmd;                              \
-  if( e != cudaSuccess ) {                          \
-    printf("Failed: Cuda error %s:%d '%s'\n",             \
-        __FILE__,__LINE__,cudaGetErrorString(e));   \
-    exit(EXIT_FAILURE);                             \
-  }                                                 \
+#define CUDACHECK(cmd) do {                         
+  cudaError_t e = cmd;                              
+  if( e != cudaSuccess ) {                          
+    printf("Failed: Cuda error %s:%d '%s'\n",             
+        __FILE__,__LINE__,cudaGetErrorString(e));   
+    exit(EXIT_FAILURE);                             
+  }                                                 
 } while(0)
 
 
-#define NCCLCHECK(cmd) do {                         \
-  ncclResult_t r = cmd;                             \
-  if (r!= ncclSuccess) {                            \
-    printf("Failed, NCCL error %s:%d '%s'\n",             \
-        __FILE__,__LINE__,ncclGetErrorString(r));   \
-    exit(EXIT_FAILURE);                             \
-  }                                                 \
+#define NCCLCHECK(cmd) do {                         
+  ncclResult_t r = cmd;                             
+  if (r!= ncclSuccess) {                            
+    printf("Failed, NCCL error %s:%d '%s'\n",             
+        __FILE__,__LINE__,ncclGetErrorString(r));   
+    exit(EXIT_FAILURE);                             
+  }                                                 
 } while(0)
 
 
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
   //managing 4 devices
   int nDev = 4;
-  int size = 32*1024*1024;
+  int size = 32*1024;
   int devs[4] = { 0, 1, 2, 3 };
 
 
@@ -42,14 +42,26 @@ int main(int argc, char* argv[])
   cudaStream_t* s = (cudaStream_t*)malloc(sizeof(cudaStream_t)*nDev);
 
 
+  //setting up sendbuff and receive buff
+  //setting array values in sendbuff and recv buff
   for (int i = 0; i < nDev; ++i) {
     CUDACHECK(cudaSetDevice(i));
     CUDACHECK(cudaMalloc(sendbuff + i, size * sizeof(float)));
     CUDACHECK(cudaMalloc(recvbuff + i, size * sizeof(float)));
-    CUDACHECK(cudaMemset(sendbuff[i], 1, size * sizeof(float)));
+    //CUDACHECK(cudaMemset(sendbuff[i], 0, size * sizeof(float)));  // default value set from nccl website
     CUDACHECK(cudaMemset(recvbuff[i], 0, size * sizeof(float)));
+
+    float sendValue = 0.
+    for(int j = 0; j < size ; j++){
+      if(sendValue>100.){sendValue = 0.}
+      CUDACHECK(cudaMemset(sendbuff[i]+j, sendValue, sizeof(float)));
+      sendValue = sendValue + 1.0;
+    }
+
     CUDACHECK(cudaStreamCreate(s+i));
   }
+
+
 
 
   //initializing NCCL
@@ -71,8 +83,12 @@ int main(int argc, char* argv[])
     CUDACHECK(cudaStreamSynchronize(s[i]));
   }
 
+  //display testing result
   for (int i = 0; i < nDev ; ++i){
-    std::cout<<"i"<<recvbuff[i]<<std::endl;
+    for(int j = 0; j < size; j++){
+      std::cout<<"i: "<<i<<"j: "<<j<<recvbuff[i]<<std::endl;
+    }
+    
   }
 
 
@@ -89,6 +105,7 @@ int main(int argc, char* argv[])
       ncclCommDestroy(comms[i]);
 
 
-  printf("Success \n");
+  //display success msg
+  printf("Test program finished \n");
   return 0;
 }
