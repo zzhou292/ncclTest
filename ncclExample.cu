@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     //CUDACHECK(cudaMemset(sendbuff[i], 0, size * sizeof(float)));  // default value set from nccl website
     CUDACHECK(cudaMemset(recvbuff[i], 0, size * sizeof(float)));
 
-    float sendValue = 0.
+    float sendValue = 0.;
     for(int j = 0; j < size ; j++){
       if(sendValue>100.){sendValue = 0.;}
       CUDACHECK(cudaMemset(sendbuff[i]+j, sendValue, sizeof(float)));
