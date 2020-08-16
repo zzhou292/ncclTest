@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
    //calling NCCL communication API. Group API is required when using
    //multiple devices per thread
   NCCLCHECK(ncclGroupStart());
-  for (int i = 0; i < nDev; ++i)
+  for (int i = 0; i < nDev; ++i){
     NCCLCHECK(ncclAllReduce((const void*)sendbuff[i], (void*)recvbuff[i], size, ncclFloat, ncclSum,
         comms[i], s[i]));
     std::cout<<"test point"<<std::endl;
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
       std::cout<<"i: "<<i<<"j: "<<j<<"  "<<recvbuff[i][j]<<std::endl;
     }
           
-        }
+    }
   NCCLCHECK(ncclGroupEnd());
 
 
