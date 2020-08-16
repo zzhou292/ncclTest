@@ -6,4 +6,4 @@
 
 #SBATCH --gres=gpu:4
 
-./b.out
+./output.out
