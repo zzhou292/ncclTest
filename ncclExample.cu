@@ -78,6 +78,14 @@ int main(int argc, char* argv[])
   for (int i = 0; i < nDev; ++i)
     NCCLCHECK(ncclAllReduce((const void*)sendbuff[i], (void*)recvbuff[i], size, ncclFloat, ncclSum,
         comms[i], s[i]));
+    std::cout<<"test point"<<std::endl;
+    
+    for(int j = 0; j < size; j++){
+      std::cout<<"test point 2"<<std::endl;
+      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<recvbuff[i][j]<<std::endl;
+    }
+          
+        }
   NCCLCHECK(ncclGroupEnd());
 
 
@@ -90,14 +98,7 @@ int main(int argc, char* argv[])
   //display testing result
   //not sure about the result
 
-  std::cout<<"test point"<<std::endl;
-  for (int i = 0; i < nDev ; ++i){
-    std::cout<<"test point 2"<<std::endl;
-    for(int j = 0; j < size; j++){
-      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<recvbuff[i][j]<<std::endl;
-    }
-    
-  }
+
 
 
   //free device buffers
