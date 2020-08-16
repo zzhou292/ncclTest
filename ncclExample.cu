@@ -78,11 +78,16 @@ int main(int argc, char* argv[])
   for (int i = 0; i < nDev; ++i){
     NCCLCHECK(ncclAllReduce((const void*)sendbuff[i], (void*)recvbuff[i], size, ncclFloat, ncclSum,
         comms[i], s[i]));
+
+    data_temp = (float*)malloc(size*sizeof(float));
+
+    cudaMemcpy(recvbuff[i], data, size * sizeof(float),cudaMemcpyDeviceToHost);
+
     std::cout<<"test point"<<std::endl;
     
     for(int j = 0; j < size; j++){
       std::cout<<"test point 2"<<std::endl;
-      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<recvbuff[i][j]<<std::endl;
+      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<data_temp[j]<<std::endl;
     }
           
     }
