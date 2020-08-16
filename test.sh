@@ -2,4 +2,4 @@
 #SBATCH --partition=batch_default
 #SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:4
-./c.out
+./d.out
