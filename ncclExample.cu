@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
   std::cout<<"test point"<<std::endl;
   for (int i = 0; i < nDev ; ++i){
     for(int j = 0; j < size; j++){
-      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<(*(sendbuff[i]))[j]<<std::endl;
+      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<sendbuff[i][j]<<std::endl;
     }
     
   }
