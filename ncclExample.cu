@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
   //not sure about the result
   for (int i = 0; i < nDev ; ++i){
     for(int j = 0; j < size; j++){
-      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<*(float*)(recvbuff[i]+j)<<std::endl;
+      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<(float*)recvbuff[i]+j<<std::endl;
     }
     
   }
