@@ -92,8 +92,9 @@ int main(int argc, char* argv[])
 
   std::cout<<"test point"<<std::endl;
   for (int i = 0; i < nDev ; ++i){
+    std::cout<<"test point 2"<<std::endl;
     for(int j = 0; j < size; j++){
-      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<sendbuff[i][j]<<std::endl;
+      std::cout<<"i: "<<i<<"j: "<<j<<"  "<<recvbuff[i][j]<<std::endl;
     }
     
   }
