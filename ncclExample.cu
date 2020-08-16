@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     for(int j = 0; j < size ; j++){
       if(sendValue>100.){sendValue = 0.;}
       //set send value as 0.0 1.0 2.0 3.0 .....100.0 0.0 1.0 2.0......
-      CUDACHECK(cudaMemset(sendbuff[i]+j*sizeof(float), sendValue, sizeof(float)));
+      CUDACHECK(cudaMemset(sendbuff[i]+j, sendValue, sizeof(float)));
       sendValue = sendValue + 1.0;
     }
 
