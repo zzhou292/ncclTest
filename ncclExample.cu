@@ -79,9 +79,9 @@ int main(int argc, char* argv[])
     NCCLCHECK(ncclAllReduce((const void*)sendbuff[i], (void*)recvbuff[i], size, ncclFloat, ncclSum,
         comms[i], s[i]));
 
-    data_temp = (float*)malloc(size*sizeof(float));
+    float* data_temp = (float*)malloc(size*sizeof(float));
 
-    cudaMemcpy(recvbuff[i], data, size * sizeof(float),cudaMemcpyDeviceToHost);
+    cudaMemcpy(recvbuff[i], data_temp, size * sizeof(float),cudaMemcpyDeviceToHost);
 
     std::cout<<"test point"<<std::endl;
     
