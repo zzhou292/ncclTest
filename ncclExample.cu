@@ -81,7 +81,10 @@ int main(int argc, char* argv[])
 
     float* data_temp = (float*)malloc(size*sizeof(float));
 
-    cudaMemcpy(recvbuff[i], data_temp, size * sizeof(float),cudaMemcpyDeviceToHost);
+    for(int j = 0; j<size; j++){
+      cudaMemcpy(recvbuff[i]+j, data_temp+j, sizeof(float),cudaMemcpyDeviceToHost);
+    }
+    
 
     std::cout<<"test point"<<std::endl;
     
